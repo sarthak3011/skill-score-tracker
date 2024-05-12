@@ -1,4 +1,9 @@
 package com.fabhotel.skillEndorsment.controller;
+/**
+ * @author: Sarthak Gupta
+ * @description: Industry Controller class to get all industries
+ * @Date: 12th May 2024
+ */
 
 import com.fabhotel.skillEndorsment.model.IndustryResponseDto;
 import com.fabhotel.skillEndorsment.service.IndustryService;

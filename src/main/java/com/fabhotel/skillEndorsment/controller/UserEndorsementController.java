@@ -8,6 +8,7 @@ package com.fabhotel.skillEndorsment.controller;
 
 import com.fabhotel.skillEndorsment.model.UserEndorsementRequestDto;
 import com.fabhotel.skillEndorsment.model.UserEndorsementResponseDto;
+import com.fabhotel.skillEndorsment.service.UserEndorsementService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -18,7 +19,9 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 public class UserEndorsementController {
 
-    public UserEndorsementResponseDto giveUserEndorsement(@RequestBody UserEndorsementRequestDto request) {
+    private final UserEndorsementService userEndorsementService;
 
+    public UserEndorsementResponseDto giveUserEndorsement(@RequestBody UserEndorsementRequestDto request) {
+        return userEndorsementService.endorseUser(request);
     }
 }
