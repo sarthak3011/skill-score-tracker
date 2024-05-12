@@ -30,9 +30,9 @@ public class CoworkerEvaluation implements ScoreEvaluatorProcessor {
         boolean doesCompanyMatch = reviewedUserCompanies.stream()
                 .anyMatch(revieweeUserCompanies::contains);
         if (!doesCompanyMatch) {
-            BigDecimal weighedScore = ScoreEvaluatorProcessor.findWeighedScoreAfterDeduction(evaluateScoreDto);
-            return new String[]{String.valueOf(weighedScore), evaluateScoreDto.getEndorsedSkillCondition().getScoreAdjustmentReason()};
+            BigDecimal deductedAmount = ScoreEvaluatorProcessor.findWeighedScoreAfterDeduction(evaluateScoreDto);
+            return new String[]{String.valueOf(deductedAmount), evaluateScoreDto.getEndorsedSkillCondition().getScoreAdjustmentReason()};
         }
-        return new String[]{String.valueOf(evaluateScoreDto.getScore()), ""};
+        return new String[]{String.valueOf(BigDecimal.ZERO), null};
     }
 }

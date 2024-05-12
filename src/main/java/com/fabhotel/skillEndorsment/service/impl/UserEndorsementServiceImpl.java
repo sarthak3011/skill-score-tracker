@@ -25,7 +25,6 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -76,10 +75,11 @@ public class UserEndorsementServiceImpl implements UserEndorsementService {
             ScoreEvaluatorProcessor scoreEvaluatorProcessor = scoreEvaluatorFactory.get(scoreEvaluation.getCondition());
             evaluateScoreDto.setEndorsedSkillCondition(scoreEvaluation);
             String[] weighedScoreReason = scoreEvaluatorProcessor.evaluateScore(evaluateScoreDto);
-            weighedScore = new BigDecimal(weighedScoreReason[0]);
+            BigDecimal deductedAmount = new BigDecimal(weighedScoreReason[0]);
+            weighedScore = weighedScore.subtract(deductedAmount);
             String adjustmentReason = weighedScoreReason[1];
             if (StringUtils.isNotEmpty(adjustmentReason)) {
-                reason = StringUtils.isNotEmpty(adjustmentReason) ? reason.concat(",").concat(weighedScoreReason[1]) : reason.concat(weighedScoreReason[1]) ;
+                reason = StringUtils.isNotEmpty(reason) ? reason.concat(",").concat(weighedScoreReason[1]) : reason.concat(weighedScoreReason[1]) ;
             }
         }
 
@@ -93,6 +93,7 @@ public class UserEndorsementServiceImpl implements UserEndorsementService {
         return UserEndorsementResponseDto.builder()
                 .reviewerUserId(reviewerUser.getUserId())
                 .reviewerUserName(reviewerUser.getName())
+                .skillName(skill.getName())
                 .actualScore(request.getScore())
                 .weighedScore(weighedScore)
                 .scoreAdjustmentReason(reason)

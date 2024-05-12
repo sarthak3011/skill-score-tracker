@@ -1,8 +1,11 @@
 endorsed-skill:
-  - condition: "YEARS_OF_EXPERIENCE"
-    deduction-in-percentage: 20
-    score-adjustment-reason: "Years of experience is less than the reviewee"
-  - condition: "SKILL_CLOSENESS"
-    deduction-in-percentage: 20
-  - condition: "COWORKER_STATUS"
-    deduction-in-percentage: 10
+  conditions:
+    - condition: "YEARS_OF_EXPERIENCE"
+      deduction-in-percentage: 20
+      score-adjustment-reason: "Years of experience is less than the reviewee"
+    - condition: "SKILL_CLOSENESS"
+      deduction-in-percentage: 20
+      score-adjustment-reason: "No Skills Match between the reviewer and reviewee"
+    - condition: "COWORKER_STATUS"
+      deduction-in-percentage: 10
+      score-adjustment-reason: "No Relationship between reviewer and the reviewee"

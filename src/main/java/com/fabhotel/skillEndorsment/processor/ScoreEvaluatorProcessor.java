@@ -20,7 +20,6 @@ public interface ScoreEvaluatorProcessor {
         BigDecimal score = evaluateScoreDto.getScore();
         BigDecimal deductionPercentage = evaluateScoreDto.getEndorsedSkillCondition().getDeductionInPercentage();
         BigDecimal deductionAmount = score.multiply(deductionPercentage).divide(new BigDecimal(100));
-        BigDecimal weighedScore = score.subtract(deductionAmount);
-        return weighedScore;
+        return deductionAmount;
     }
 }

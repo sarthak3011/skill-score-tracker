@@ -24,9 +24,9 @@ public class SkillEvaluation implements ScoreEvaluatorProcessor {
     public String[] evaluateScore(EvaluateScoreDto evaluateScoreDto) {
         UserProfile reviewedUser = evaluateScoreDto.getReviewerUser();
         if (!reviewedUser.getSkills().contains(evaluateScoreDto.getSkillName())) {
-            BigDecimal weighedScore = ScoreEvaluatorProcessor.findWeighedScoreAfterDeduction(evaluateScoreDto);
-            return new String[]{String.valueOf(weighedScore), evaluateScoreDto.getEndorsedSkillCondition().getScoreAdjustmentReason()};
+            BigDecimal deductedAmount = ScoreEvaluatorProcessor.findWeighedScoreAfterDeduction(evaluateScoreDto);
+            return new String[]{String.valueOf(deductedAmount), evaluateScoreDto.getEndorsedSkillCondition().getScoreAdjustmentReason()};
         }
-        return new String[]{String.valueOf(evaluateScoreDto.getScore()), ""};
+        return new String[]{String.valueOf(BigDecimal.ZERO), null};
     }
 }
