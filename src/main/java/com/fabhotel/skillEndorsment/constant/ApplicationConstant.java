@@ -8,4 +8,5 @@ package com.fabhotel.skillEndorsment.constant;
 
 public interface ApplicationConstant {
     String SEMICOLON = ";";
+    String USER = "user";
 }

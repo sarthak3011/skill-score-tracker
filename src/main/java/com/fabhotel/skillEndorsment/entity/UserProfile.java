@@ -47,6 +47,6 @@ public class UserProfile extends BaseEntity {
 
     @Column
     @Convert(converter = StringToListConverter.class)
-    private List<Skills> skills;
+    private List<String> skills;
 
 }
