@@ -1,4 +1,9 @@
 package com.fabhotel.skillEndorsment.service.impl;
+/**
+ * @author: Sarthak Gupta
+ * @description: Skill service class for basic CRUD business logic
+ * @Date: 12th May 2024
+ */
 
 import com.fabhotel.skillEndorsment.converter.SkillsConverter;
 import com.fabhotel.skillEndorsment.entity.Industry;
@@ -34,4 +39,10 @@ public class SkillServiceImpl implements SkillService {
         List<Skills> skillByIndustry = skillsRepo.findByIndustry(industry);
         return skillByIndustry.stream().map(skills -> SkillsConverter.convertEntityToDto(skills)).toList();
     }
+
+    @Override
+    public Skills getSkillById(Long id) throws BadRequestException {
+        return skillsRepo.findById(id).orElseThrow(() -> new BadRequestException("Skill not present"));
+    }
+
 }

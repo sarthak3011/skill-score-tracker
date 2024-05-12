@@ -10,7 +10,7 @@ public class SkillsConverter {
                 .id(entity.getId())
                 .name(entity.getName())
                 .description(entity.getDescription())
-                .industry(IndustryConverter.convertDtoToEntity(entity.getIndustry()))
+                .industry(IndustryConverter.convertEntityToDto(entity.getIndustry()))
                 .build();
     }
 }

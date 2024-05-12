@@ -1,5 +1,9 @@
 package com.fabhotel.skillEndorsment.service.impl;
-
+/**
+ * @author: Sarthak Gupta
+ * @description: Industry service class for basic CRUD business logic
+ * @Date: 12th May 2024
+ */
 
 import com.fabhotel.skillEndorsment.converter.IndustryConverter;
 import com.fabhotel.skillEndorsment.entity.Industry;

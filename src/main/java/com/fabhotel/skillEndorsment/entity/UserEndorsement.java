@@ -17,6 +17,8 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
+import java.math.BigDecimal;
+
 @Entity
 @Table(name = "user_endorsement")
 @Getter
@@ -34,8 +36,11 @@ public class UserEndorsement extends BaseEntity {
     private String reviewer;      // who is endorsing the skill
 
     @Column(name = "fk_skill_id", nullable = false)
-    private Integer skillId;
+    private Long skillId;
 
     @Column(nullable = false)
-    private int score;
+    private BigDecimal score;
+
+    @Column(name = "actual_weighed_score", nullable = false)
+    private BigDecimal actualWeighedScore;
 }

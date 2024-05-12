@@ -1,4 +1,9 @@
 package com.fabhotel.skillEndorsment.service.impl;
+/**
+ * @author: Sarthak Gupta
+ * @description: User service class for profile creation business logic
+ * @Date: 12th May 2024
+ */
 
 import com.fabhotel.skillEndorsment.converter.UserConverter;
 import com.fabhotel.skillEndorsment.entity.UserProfile;
@@ -25,5 +30,10 @@ public class UserServiceImpl implements UserService {
         }
         UserProfile userProfile = UserConverter.convertDtoToEntity(userProfileDto);
         userProfileRepo.save(userProfile);
+    }
+
+    @Override
+    public UserProfile getUserDetails(String userId) throws BadRequestException {
+        return userProfileRepo.findByUserId(userId).orElseThrow(() -> new BadRequestException("User does not exist"));
     }
 }
