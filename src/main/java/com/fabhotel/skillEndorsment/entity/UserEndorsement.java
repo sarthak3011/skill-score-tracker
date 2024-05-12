@@ -35,12 +35,18 @@ public class UserEndorsement extends BaseEntity {
     @Column(nullable = false)
     private String reviewer;      // who is endorsing the skill
 
-    @Column(name = "fk_skill_id", nullable = false)
+    @Column(name = "skill_id", nullable = false)
     private Long skillId;
+
+    @Column(name = "skill_name", nullable = false)
+    private String skillName;
 
     @Column(nullable = false)
     private BigDecimal score;
 
     @Column(name = "actual_weighed_score", nullable = false)
     private BigDecimal actualWeighedScore;
+
+    @Column(name = "score_adjustment_reason")
+    private String scoreAdjustmentReason;
 }

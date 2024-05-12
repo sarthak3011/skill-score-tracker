@@ -21,5 +21,6 @@ public class EvaluateScoreDto {
     private UserProfile reviewerUser;
     private BigDecimal score;
     private Long skillId;
+    private String skillName;
     private EndorsementScoreConfig.EndorsedSkillCondition endorsedSkillCondition;
 }

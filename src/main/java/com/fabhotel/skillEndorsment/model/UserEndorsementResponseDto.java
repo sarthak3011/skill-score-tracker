@@ -22,6 +22,7 @@ public class UserEndorsementResponseDto {
 
     private String reviewerUserId;
     private String reviewerUserName;
+    private String skillName;
     private BigDecimal actualScore;
     private BigDecimal weighedScore;
     private String scoreAdjustmentReason;

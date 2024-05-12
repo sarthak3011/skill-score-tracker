@@ -17,8 +17,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api/v1/user-endorsement")
@@ -33,7 +33,7 @@ public class UserEndorsementController {
     }
 
     @GetMapping
-    public HashMap<String, List<UserEndorsementResponseDto>> getUserSkillsEndorsement(@RequestParam String userId) {
-        return null;
+    public Map<String, List<UserEndorsementResponseDto>> getUserSkillsEndorsement(@RequestParam String userId) {
+        return userEndorsementService.getUserEndorsedSkills(userId);
     }
 }

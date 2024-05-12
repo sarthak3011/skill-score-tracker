@@ -21,10 +21,14 @@ import com.fabhotel.skillEndorsment.service.UserEndorsementService;
 import com.fabhotel.skillEndorsment.service.UserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 @Service
 @Log4j2
@@ -62,6 +66,7 @@ public class UserEndorsementServiceImpl implements UserEndorsementService {
                 .reviewerUser(reviewerUser)
                 .score(request.getScore())
                 .skillId(request.getSkillId())
+                .skillName(skill.getName())
                 .build();
 
         BigDecimal weighedScore = request.getScore();
@@ -72,11 +77,16 @@ public class UserEndorsementServiceImpl implements UserEndorsementService {
             evaluateScoreDto.setEndorsedSkillCondition(scoreEvaluation);
             String[] weighedScoreReason = scoreEvaluatorProcessor.evaluateScore(evaluateScoreDto);
             weighedScore = new BigDecimal(weighedScoreReason[0]);
-            reason = weighedScoreReason[1];
+            String adjustmentReason = weighedScoreReason[1];
+            if (StringUtils.isNotEmpty(adjustmentReason)) {
+                reason = StringUtils.isNotEmpty(adjustmentReason) ? reason.concat(",").concat(weighedScoreReason[1]) : reason.concat(weighedScoreReason[1]) ;
+            }
         }
 
         // Save the endorsement
-        UserEndorsement userEndorsement = UserConverter.convertEndorsementDtoToEntity(request);
+        UserEndorsement userEndorsement = UserConverter.convertEndorsementDtoToEntity(request, skill);
+        userEndorsement.setActualWeighedScore(weighedScore);
+        userEndorsement.setScoreAdjustmentReason(reason);
         userEndorsementRepo.save(userEndorsement);
 
         // Build and return the response
@@ -90,9 +100,19 @@ public class UserEndorsementServiceImpl implements UserEndorsementService {
     }
 
     @Override
-    public UserEndorsementResponseDto getUserEndorsedSkills(UserEndorsementRequestDto request) {
-        return null;
+    public Map<String, List<UserEndorsementResponseDto>> getUserEndorsedSkills(String userId) {
+        UserProfile userProfile = getUserDetails(userId);
+        List<String> skills = userProfile.getSkills();
+        List<UserEndorsement> userEndorsements = userEndorsementRepo.findByRevieweeAndSkillNameIn(userId, skills);
+        return convertToMap(userEndorsements);
     }
+
+    public static Map<String, List<UserEndorsementResponseDto>> convertToMap(List<UserEndorsement> endorsements) {
+        return endorsements.stream()
+                .map(UserConverter::convertEndorsementToResponseDto)
+                .collect(Collectors.groupingBy(UserEndorsementResponseDto::getSkillName));
+    }
+
 
     private UserProfile getUserDetails(String userId) throws RuntimeException {
         return userService.getUserDetails(userId);

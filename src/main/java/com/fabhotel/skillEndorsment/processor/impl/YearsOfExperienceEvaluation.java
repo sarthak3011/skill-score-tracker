@@ -23,10 +23,7 @@ public class YearsOfExperienceEvaluation implements ScoreEvaluatorProcessor {
     @Override
     public String[] evaluateScore(EvaluateScoreDto evaluateScoreDto) {
         if (evaluateScoreDto.getRevieweeUser().getYearsOfExperience() > evaluateScoreDto.getReviewerUser().getYearsOfExperience()) {
-            BigDecimal score = evaluateScoreDto.getScore();
-            BigDecimal deductionPercentage = evaluateScoreDto.getEndorsedSkillCondition().getDeductionInPercentage();
-            BigDecimal deductionAmount = score.multiply(deductionPercentage).divide(new BigDecimal(100));
-            BigDecimal weighedScore = score.subtract(deductionAmount);
+            BigDecimal weighedScore = ScoreEvaluatorProcessor.findWeighedScoreAfterDeduction(evaluateScoreDto);
             return new String[]{String.valueOf(weighedScore), evaluateScoreDto.getEndorsedSkillCondition().getScoreAdjustmentReason()};
         }
         return new String[]{String.valueOf(evaluateScoreDto.getScore()), ""};

@@ -23,5 +23,5 @@ public class UserProfileDto {
     private int yearsOfExperience;
     private int industryId;
     private List<String> skills;
-
+    private List<String> companies;
 }
