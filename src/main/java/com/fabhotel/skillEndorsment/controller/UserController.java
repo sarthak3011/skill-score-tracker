@@ -8,7 +8,6 @@ package com.fabhotel.skillEndorsment.controller;
 import com.fabhotel.skillEndorsment.model.UserProfileDto;
 import com.fabhotel.skillEndorsment.service.UserService;
 import lombok.RequiredArgsConstructor;
-import org.apache.coyote.BadRequestException;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -22,7 +21,7 @@ public class UserController {
     private final UserService userService;
 
     @PostMapping
-    public void createProfile(@RequestBody UserProfileDto userProfileDto) throws BadRequestException {
+    public void createProfile(@RequestBody UserProfileDto userProfileDto) throws RuntimeException {
         userService.createUserProfile(userProfileDto);
     }
 }

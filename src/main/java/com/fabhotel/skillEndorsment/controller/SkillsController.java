@@ -8,7 +8,6 @@ package com.fabhotel.skillEndorsment.controller;
 import com.fabhotel.skillEndorsment.model.SkillsResponseDto;
 import com.fabhotel.skillEndorsment.service.SkillService;
 import lombok.RequiredArgsConstructor;
-import org.apache.coyote.BadRequestException;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -24,7 +23,7 @@ public class SkillsController {
     private final SkillService skillService;
 
     @GetMapping
-    public List<SkillsResponseDto> getAllSkillsByIndustry(@RequestParam Long industryId) throws BadRequestException {
+    public List<SkillsResponseDto> getAllSkillsByIndustry(@RequestParam Long industryId) throws RuntimeException {
         return skillService.getAllSkillsByIndustry(industryId);
     }
 }

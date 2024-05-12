@@ -14,7 +14,6 @@ import com.fabhotel.skillEndorsment.service.IndustryService;
 import com.fabhotel.skillEndorsment.service.SkillService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
-import org.apache.coyote.BadRequestException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -30,19 +29,19 @@ public class SkillServiceImpl implements SkillService {
     private final SkillsRepo skillsRepo;
 
     @Override
-    public List<SkillsResponseDto> getAllSkillsByIndustry(Long industryId) throws BadRequestException {
+    public List<SkillsResponseDto> getAllSkillsByIndustry(Long industryId) throws RuntimeException {
         Industry industry = industryService.getIndustry(industryId);
         if (Objects.isNull(industry)) {
             log.error("[getAllSkillsByIndustry] Industry doesn't exist : {}", industryId);
-            throw new BadRequestException("Industry doesn't exist");
+            throw new RuntimeException("Industry doesn't exist");
         }
         List<Skills> skillByIndustry = skillsRepo.findByIndustry(industry);
         return skillByIndustry.stream().map(skills -> SkillsConverter.convertEntityToDto(skills)).toList();
     }
 
     @Override
-    public Skills getSkillById(Long id) throws BadRequestException {
-        return skillsRepo.findById(id).orElseThrow(() -> new BadRequestException("Skill not present"));
+    public Skills getSkillById(Long id) throws RuntimeException {
+        return skillsRepo.findById(id).orElseThrow(() -> new RuntimeException("Skill not present"));
     }
 
 }

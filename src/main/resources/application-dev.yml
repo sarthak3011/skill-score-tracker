@@ -1,4 +1,0 @@
-ACTIVE_PROFILE: dev
-MYSQL_URL: jdbc:mysql://localhost:3306/fabhotel_skill_endorsment
-MYSQL_USER: root
-MYSQL_PASSWORD:

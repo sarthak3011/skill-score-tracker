@@ -12,7 +12,6 @@ import com.fabhotel.skillEndorsment.repository.UserProfileRepo;
 import com.fabhotel.skillEndorsment.service.UserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
-import org.apache.coyote.BadRequestException;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -23,17 +22,17 @@ public class UserServiceImpl implements UserService {
     private final UserProfileRepo userProfileRepo;
 
     @Override
-    public void createUserProfile(UserProfileDto userProfileDto) throws BadRequestException {
+    public void createUserProfile(UserProfileDto userProfileDto) throws RuntimeException {
         log.info("[createUserProfile] method invoked of UserServiceImpl with request : {}", userProfileDto);
         if (userProfileRepo.findByEmail(userProfileDto.getEmail()).isPresent()) {
-            throw new BadRequestException("User already exists");
+            throw new RuntimeException("User already exists");
         }
         UserProfile userProfile = UserConverter.convertDtoToEntity(userProfileDto);
         userProfileRepo.save(userProfile);
     }
 
     @Override
-    public UserProfile getUserDetails(String userId) throws BadRequestException {
-        return userProfileRepo.findByUserId(userId).orElseThrow(() -> new BadRequestException("User does not exist"));
+    public UserProfile getUserDetails(String userId) throws RuntimeException {
+        return userProfileRepo.findByUserId(userId).orElseThrow(() -> new RuntimeException("User does not exist"));
     }
 }

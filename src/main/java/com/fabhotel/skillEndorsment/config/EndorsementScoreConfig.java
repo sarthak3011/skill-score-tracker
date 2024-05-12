@@ -14,7 +14,7 @@ import java.util.List;
 @Setter
 @Configuration
 @ConfigurationProperties(prefix = "endorsed-skill")
-@PropertySource(value = "classpath:endorsed-skill.yml", factory = YamlPropertySourceFactory.class)
+@PropertySource(value = "classpath:endorsement-score-config.yml", factory = YamlPropertySourceFactory.class)
 public class EndorsementScoreConfig {
 
     private List<EndorsedSkillCondition> conditions;

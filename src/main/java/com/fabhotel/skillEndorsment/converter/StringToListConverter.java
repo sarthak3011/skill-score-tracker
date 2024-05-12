@@ -6,13 +6,15 @@ package com.fabhotel.skillEndorsment.converter;
  @Date: 12th May 2024
  */
 
-import jakarta.persistence.AttributeConverter;
-import jakarta.persistence.Converter;
 import org.apache.commons.lang3.StringUtils;
 
 import java.util.Arrays;
 import java.util.List;
 import org.apache.commons.collections.CollectionUtils;
+
+import javax.persistence.AttributeConverter;
+import javax.persistence.Converter;
+
 import static com.fabhotel.skillEndorsment.constant.ApplicationConstant.SEMICOLON;
 import static java.util.Collections.emptyList;
 

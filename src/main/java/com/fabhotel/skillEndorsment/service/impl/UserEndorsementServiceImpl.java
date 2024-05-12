@@ -21,7 +21,6 @@ import com.fabhotel.skillEndorsment.service.UserEndorsementService;
 import com.fabhotel.skillEndorsment.service.UserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
-import org.apache.coyote.BadRequestException;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
@@ -43,13 +42,13 @@ public class UserEndorsementServiceImpl implements UserEndorsementService {
     private final ScoreEvaluatorFactory scoreEvaluatorFactory;
 
     @Override
-    public UserEndorsementResponseDto endorseUser(UserEndorsementRequestDto request) throws BadRequestException {
+    public UserEndorsementResponseDto endorseUser(UserEndorsementRequestDto request) throws RuntimeException {
         log.info("[endorseUser] method invoked for UserEndorsementServiceImpl: {}", request);
 
         // Check if the user has already endorsed this skill to this user
         if (userEndorsementRepo.findByRevieweeAndReviewerAndSkillId(
                 request.getRevieweeUserId(), request.getReviewerUserId(), request.getSkillId()).isPresent()) {
-            throw new BadRequestException("User has already endorsed this skill to this user");
+            throw new RuntimeException("User has already endorsed this skill to this user");
         }
 
         // Get user details and skill
@@ -95,7 +94,7 @@ public class UserEndorsementServiceImpl implements UserEndorsementService {
         return null;
     }
 
-    private UserProfile getUserDetails(String userId) throws BadRequestException {
+    private UserProfile getUserDetails(String userId) throws RuntimeException {
         return userService.getUserDetails(userId);
     }
 

@@ -10,7 +10,6 @@ import com.fabhotel.skillEndorsment.model.UserEndorsementRequestDto;
 import com.fabhotel.skillEndorsment.model.UserEndorsementResponseDto;
 import com.fabhotel.skillEndorsment.service.UserEndorsementService;
 import lombok.RequiredArgsConstructor;
-import org.apache.coyote.BadRequestException;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -29,7 +28,7 @@ public class UserEndorsementController {
     private final UserEndorsementService userEndorsementService;
 
     @PostMapping
-    public UserEndorsementResponseDto giveUserEndorsement(@RequestBody UserEndorsementRequestDto request) throws BadRequestException {
+    public UserEndorsementResponseDto giveUserEndorsement(@RequestBody UserEndorsementRequestDto request) throws RuntimeException {
         return userEndorsementService.endorseUser(request);
     }
 
